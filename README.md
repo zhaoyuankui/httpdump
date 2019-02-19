@@ -16,6 +16,19 @@ for centos/redhat/fedora:
 ```sh
 sudo yum install libpcap-devel
 ```
+在CentOS下,默认的是无法安装libpcap与libpcap-devel的
+
+需要进入/etc/yum.repos.d目录下，vim Centos-Vault.repo中
+
+修改
+```
+[C6.0-base]
+name=CentOS-6.0 - Base
+baseurl=http://vault.centos.org/6.0/os/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+enabled=0 为1
+```
 
 for osx:
 
