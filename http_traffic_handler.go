@@ -255,10 +255,12 @@ func (h *HTTPTrafficHandler) printBody(hasBody bool, header http.Header, reader 
 	contentEncoding := header.Get("Content-Encoding")
 	var nr io.ReadCloser
 	var err error
+	var isGzip bool
 	if contentEncoding == "" {
 		// do nothing
 		nr = reader
 	} else if strings.Contains(contentEncoding, "gzip") {
+		isGzip = true
 		nr, err = gzip.NewReader(reader)
 		if err != nil {
 			h.writeLine("{Decompress gzip err:", err, ", len:", tcpreader.DiscardBytesToEOF(reader), "}")
@@ -296,6 +298,9 @@ func (h *HTTPTrafficHandler) printBody(hasBody bool, header http.Header, reader 
 	}
 
 	var body string
+	if isGzip {
+	    charset = ""
+    }
 	if charset == "" {
 		// response do not set charset, try to detect
 		var data []byte

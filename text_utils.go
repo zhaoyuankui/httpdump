@@ -181,7 +181,7 @@ func parseContentType(contentType string) (string, string) {
 		if eidx < 0 {
 			charset = ""
 		} else {
-			charset = strings.TrimSpace(charsetSeg[eidx+1:])
+			charset = strings.ToUpper(strings.TrimSpace(charsetSeg[eidx+1:]))
 		}
 	}
 	return mimeTypeStr, charset
